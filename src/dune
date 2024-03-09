@@ -1,0 +1,16 @@
+(executable
+ (public_name nsafs)
+ (name nsafs)
+ (libraries dolog ezcurl ezgzip ocamlfuse toml)
+ (preprocess (pps ppx_string)))
+
+(ocamllex policy_lexer)
+
+(menhir
+  (modules policy_tokens)
+  (flags --only-tokens))
+
+(menhir
+  (modules policy_tokens policy_parser)
+  (merge_into policy_parser)
+  (flags --external-tokens Policy_tokens))
