@@ -38,7 +38,11 @@ let format components now =
   let format_series series =
     let series = match series.[0] with
       | '{' -> formatted_components ^ series
-      | _ -> formatted_components ^ "." ^ series in
+      | _ -> begin
+          match formatted_components with
+          | "" -> series
+          | _ -> formatted_components ^ "." ^ series
+        end in
     match series.[String.length series - 1] with
       | '}' -> series
       | _ -> series ^ "{}" in
